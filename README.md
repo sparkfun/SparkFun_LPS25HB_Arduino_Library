@@ -1,11 +1,11 @@
 SparkFun Flexible OLED SSD1320 Arduino Library
 ========================================
 
-![SparkFun Micro OLED Breakout](https://cdn.sparkfun.com//assets/parts/1/2/6/6/6/Flexible-Grayscale-OLED-6.jpg)
+![SparkFun Micro OLED Breakout](https://cdn.sparkfun.com//assets/parts/1/2/6/6/6/14543-Flexible_Grayscale_OLED-04.jpg)
 
-[*SparkFun Flexible Grayscale Display (SPX-14543)*](https://www.sparkfun.com/products/14543)
+[*SparkFun Flexible Grayscale Display (SPX-14767)*](https://www.sparkfun.com/products/14767)
 
-An Arduino library that allows you to draw shapes and text on the SparkFun flexible grayscale OLED display.
+An Arduino library that allows you to use basic functionality of the LPS25HB ressure sensor.
 
 Repository Contents
 -------------------
