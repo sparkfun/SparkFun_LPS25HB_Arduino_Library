@@ -23,15 +23,14 @@
 
 
 
-
-#include <LPS25HB.h>
+// Click here to get the library: http://librarymanager/All#SparkFun_VEML6075 /// Update<---
+#include <LPS25HB.h>  //
 
 LPS25HB pressureSensor; // Create an object of the LPS25HB class
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  while(!Serial){} 
   Serial.println("Hello!");
 
   pressureSensor.begin();                                      // Simplest begin function uses the default Wire port and the default I2C address for the sensor
