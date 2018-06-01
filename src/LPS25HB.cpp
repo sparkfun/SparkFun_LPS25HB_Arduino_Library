@@ -159,29 +159,17 @@ LPS25HB_CodesTypeDef LPS25HB::setPressureThreshold(uint16_t adc_val)
 
 LPS25HB_CodesTypeDef LPS25HB::setTemperatureAverages(uint8_t avg_code)
 {
-	uint8_t prev_setting;													// Store the old settings
-	read(LPS25HB_REG_RES_CONF, &prev_setting, 1, sensor_address);
-
-	uint8_t new_setting = ((prev_setting & 0x03) | (avg_code & 0x0C));		// Mask the old settings and add in the new
-	return write(LPS25HB_REG_RES_CONF, &new_setting, 1, sensor_address);	// Write the new combined settings
+	return applySetting(LPS25HB_REG_RES_CONF, (avg_code & 0x0C));
 }
 
 LPS25HB_CodesTypeDef LPS25HB::setPressureAverages(uint8_t avg_code)
 {
-	uint8_t prev_setting;													// Store the old settings
-	read(LPS25HB_REG_RES_CONF, &prev_setting, 1, sensor_address);
-
-	uint8_t new_setting = ((prev_setting & 0x0C) | (avg_code & 0x03));		// Mask the old settings and add in the new
-	return write(LPS25HB_REG_RES_CONF, &new_setting, 1, sensor_address);	// Write the new combined settings
+	return applySetting(LPS25HB_REG_RES_CONF, (avg_code & 0x03));
 }
 
 LPS25HB_CodesTypeDef LPS25HB::setOutputDataRate(uint8_t odr_code)
 {
-	uint8_t prev_setting;													// Store the old settings
-	read(LPS25HB_REG_CTRL_REG1, &prev_setting, 1, sensor_address);
-
-	uint8_t new_setting = ((prev_setting & 0x8F) | (odr_code & 0x70));		// Mask the old settings and add in the new
-	return write(LPS25HB_REG_CTRL_REG1, &new_setting, 1, sensor_address);	// Write the new combined settings
+	return applySetting(LPS25HB_REG_CTRL_REG1, (odr_code & 0x70));
 }
 
 LPS25HB_CodesTypeDef LPS25HB::setFIFOMode(uint8_t mode_code)
@@ -205,19 +193,34 @@ LPS25HB_CodesTypeDef LPS25HB::setFIFOMode(uint8_t mode_code)
 	new_setting = ((prev_setting & 0x1F) | (mode_code & 0xE0));
 	if(write(LPS25HB_REG_FIFO_CTRL, &new_setting, 1, sensor_address) != LPS25HB_CODE_NOM){return LPS25HB_CODE_ERR;}			// Sets the new FIFO mode
 	return LPS25HB_CODE_NOM;
+
 }
 
 LPS25HB_CodesTypeDef LPS25HB::setFIFOMeanNum(uint8_t num_code)
 {
-	uint8_t prev_setting;
-	uint8_t new_setting;
-
-	read(LPS25HB_REG_FIFO_CTRL, &prev_setting, 1, sensor_address);
-	new_setting = ((prev_setting & 0xE0) | (num_code & 0x1F));
-	if(write(LPS25HB_REG_FIFO_CTRL, &new_setting, 1, sensor_address) != LPS25HB_CODE_NOM){return LPS25HB_CODE_ERR;}
-	return LPS25HB_CODE_NOM;
+	return applySetting(LPS25HB_REG_FIFO_CTRL, (num_code & 0x1F));
 }
 
+
+
+
+
+
+
+
+
+
+LPS25HB_CodesTypeDef LPS25HB::applySetting(uint8_t reg_adr, uint8_t setting)
+{
+	uint8_t data;																// Declare space for the data
+	read(reg_adr, &data, 1, sensor_address);									// Now fill that space with the old setting from the sensor
+	data = ((data & ~setting) | setting);										// Mask out the old setting and then OR in the new setting
+	if(write(reg_adr, &data, 1, sensor_address) != LPS25HB_CODE_NOM)			// Write the new data back to the device and make sure it was successful
+	{
+		return LPS25HB_CODE_ERR;												// If it failed then return an error
+	}
+	return LPS25HB_CODE_NOM;													// Otherwise its all good!
+}
 
 
 

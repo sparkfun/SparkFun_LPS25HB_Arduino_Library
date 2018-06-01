@@ -205,6 +205,9 @@ public:
 	LPS25HB_CodesTypeDef setFIFOMode(uint8_t mode_code);
 	LPS25HB_CodesTypeDef setFIFOMeanNum(uint8_t mean_num);
 
+	// Setting Changer
+	LPS25HB_CodesTypeDef applySetting(uint8_t reg_adr, uint8_t setting);
+
 	// I2C Interface Basics
 	LPS25HB_CodesTypeDef read( uint8_t reg_adr, uint8_t * pdata, uint8_t size, uint8_t address = LPS25HB_I2C_ADDR_DEF);
 	LPS25HB_CodesTypeDef write( uint8_t reg_adr, uint8_t * pdata, uint8_t size, uint8_t address = LPS25HB_I2C_ADDR_DEF);

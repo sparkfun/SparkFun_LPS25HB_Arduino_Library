@@ -11,8 +11,13 @@ LPS25HB	KEYWORD1
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
+begin	KEYWORD2
+
 getPressure_raw	KEYWORD2
 getPressure_hPa	KEYWORD2
+
+isConnected	KEYWORD2
+
 
 getID	KEYWORD2
 getStatus	KEYWORD2

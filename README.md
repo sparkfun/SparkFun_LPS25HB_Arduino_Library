@@ -1,11 +1,13 @@
-SparkFun Flexible OLED SSD1320 Arduino Library
+SparkFun LPS25HB Absolute Barometric Pressure Sensor Arduino Library
 ========================================
 
-![SparkFun Micro OLED Breakout](https://cdn.sparkfun.com//assets/parts/1/2/6/6/6/14543-Flexible_Grayscale_OLED-04.jpg)
+![SparkFun Qwiic Pressure Sensor w/ LPS25HB](https://cdn.sparkfun.com//assets/parts/1/2/6/6/6/14543-Flexible_Grayscale_OLED-04.jpg)
 
-[*SparkFun Flexible Grayscale Display (SPX-14767)*](https://www.sparkfun.com/products/14767)
+[*SparkFun Qwiic Pressure Sensor w/ LPS25HB (SPX-14767)*](https://www.sparkfun.com/products/14767)
 
-An Arduino library that allows you to use basic functionality of the LPS25HB ressure sensor.
+An Arduino library that provides basic functions for getting pressure and temperature readings. 
+Allows the user to support up to two sensors on a given I2C bus, and allows use of multiple I2C busses.
+Additional access to settings is available for advanced use.
 
 Repository Contents
 -------------------
@@ -24,12 +26,11 @@ Documentation
 Products that use this Library 
 ---------------------------------
 
-* [LCD-14606](https://www.sparkfun.com/products/14606) -  SparkFun red version
-* [SPX-14543](https://www.sparkfun.com/products/14543) - SparkX version
+* [SPX-14767](https://www.sparkfun.com/products/14767) - SparkX version
 
 Version History
 ---------------
-* [V 1.0.0](https://github.com/sparkfun/SparkFun_SSD1320_OLED_Arduino_Library/tree/V_1.0.0) - Initial release
+* [V 1.0.0](https://github.com/sparkfun/SparkFun_LPS25HB_Arduino_Library/tree/V_1.0.0) - Initial release
 
 License Information
 -------------------

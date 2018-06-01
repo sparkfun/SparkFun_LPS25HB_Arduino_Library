@@ -1,30 +1,73 @@
-#include <LPS25HB.h>
+/*
+  Change the Wire port and I2C address to enable using additional sensors
+  By: Owen Lyke
+  SparkFun Electronics
+  Date: May 31st 2018
+  License: This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
 
-LPS25HB pressure_sensor; // Create an object of the LPS25HB class
+  Example2_I2C_Configuration
 
+  Hardware requirements:
+  If you want to use a second Wire port first ensure that the board you are using supports it.
+  If you want to use two LPS25HB sensors on the same Wire port then ensure that the ADR jumper
+  is soldered on one and only one of the sensors.
+
+  To connect the sensor to an Arduino:
+  This library supports the sensor using the I2C protocol
+  On Qwiic enabled boards simply connnect the sensor with a Qwiic cable and it is set to go
+  On non-qwiic boards you will need to connect 4 wires between the sensor and the host board
+  (Arduino pin) = (Display pin)
+  SCL = SCL on display carrier
+  SDA = SDA
+  GND = GND
+  3.3V = 3.3V
+*/
+
+// Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
+#include <LPS25HB.h>  //
+
+LPS25HB pressureSensor; // Create an object of the LPS25HB class
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   while(!Serial){} 
-  Serial.println("Hello!");
+  Serial.println("\nHello!");
 
-  pressure_sensor.begin(Wire, LPS25HB_I2C_ADDR_DEF); // This illustrates the default values when using the Qwiic system with the LPS25HB right out of the box
-//  pressure_sensor.begin(Wire2, LPS25HB_I2C_ADDR_ALT); // This line illustrates how the begin function can be used to start the sensor on a different Wire port (if the master board supports it) and with the alternate address (allows up to two sensors on the same I2C lines by soldering the ADR jumper)
+
+  /* Using the begin() function for the LPS25HB gives the opportunity to 
+   *  change which Wire port and I2C address you want to use. This makes
+   *  it possible to use up to 2 sensors on any one I2C bus, and to put 
+   *  additional sensors on other Wire ports if the microcontroller supports
+   *  that.
+   */
+
+  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF);    // Begin using default values when using the Qwiic system with the LPS25HB right out of the box
+//  pressureSensor.begin(Wire2);                         // By passing in only one argument you specify which Wire port to use - here we specify the Wire2 port
+//  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_ALT);    // In order to use the alternate address you must pass in both parameters like this
+//  pressureSensor.begin(LPS25HB_I2C_ADDR_ALT);          // This line would fail because begin() expects the first argument to be a Wire port
+//  pressureSensor.begin(Wire2, LPS25HB_I2C_ADDR_ALT);   // And of course you can change both the Wire port and the sensor address
+
+  if(pressureSensor.isConnected() == LPS25HB_CODE_DISCONNECTED)  // The library supports some different error codes such as "DISCONNECTED"
+  {
+    Serial.println("LPS25HB not found with your settings: ");                        // Alert the user that the device cannot be reached
+    Serial.println("Troubleshooting: ");
+    Serial.println("  Ensure the correct I2C address is used (in begin() function)");
+    Serial.println("  Ensure the correct Wire port is used (in begin() function)");
+    Serial.println("  Ensure the sensor is connected correctly");
+    Serial.println("Reset the board or re-upload to try again."); 
+    Serial.println("");
+    while(1);
+  }
 }
 
 void loop() {
   // put your main code here, to run repeatedly:
-  if(pressure_sensor.isConnected() == LPS25HB_CODE_CONNECTED)
-  {
-    if(pressure_sensor.getStatus() == 0x00){pressure_sensor.begin();}                                 // If it is connected but not responding (for example after a hot-swap) then it may need to be re-initialized
-    Serial.print("Connected. Sensor Status: "); Serial.print(pressure_sensor.getStatus(),HEX);        // Read the sensor status, the datasheet can explain what the various codes mean
-    Serial.print(", Pressure in hPa: "); Serial.print(pressure_sensor.getPressure_hPa());               // Get the pressure reading in hPa as determined by dividing the number of ADC counts by 4096 (according to the datasheet)
-    Serial.print(", Temperature (degC): "); Serial.println(pressure_sensor.getTemperature_degC());    // Get the temperature in degrees C by dividing the ADC count by 480
-  }
-  else
-  {
-    Serial.println("Disconnected");
-    pressure_sensor.begin();
-  }
-  delay(100);
+  Serial.print("Pressure (hPa): "); 
+  Serial.print(pressureSensor.getPressure_hPa());          // Get the pressure reading in hPa
+  Serial.print(", Temperature (degC): "); 
+  Serial.println(pressureSensor.getTemperature_degC());    // Get the temperature in degrees C
+
+  delay(40);                                               // Wait - 40 ms corresponds to the maximum update rate of the sensor (25 Hz)
 }
+
+

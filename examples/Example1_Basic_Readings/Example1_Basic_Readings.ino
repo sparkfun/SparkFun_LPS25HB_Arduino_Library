@@ -5,7 +5,7 @@
   Date: May 31st 2018
   License: This code is public domain but you buy me a beer if you use this and we meet someday (Beerware license).
 
-  Example1_Basic Readings
+  Example1_Basic_Readings
 
   To connect the sensor to an Arduino:
   This library supports the sensor using the I2C protocol
@@ -26,17 +26,18 @@ LPS25HB pressureSensor; // Create an object of the LPS25HB class
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
-  Serial.println("Hello!");
-
-  while(pressureSensor.isConnected == LPS25HB_CODE_DISCONNECTED)  // The library supports some different error codes such as "DISCONNECTED"
-  {
-    Serial.print("Waiting for connection to LPS25HB.");                         // Alert the user that the device cannot be reached
-    Serial.print(" Are you using the right Wire port and I2C address?");        // Suggest possible fixes
-    Serial.println(" See Example2_I2C_Configuration for how to change these."); // Suggest possible fixes
-    delay(250);
-  }
+  Serial.println("\nHello!");
 
   pressureSensor.begin();    // Begin links an I2C port and I2C address to the sensor, begins I2C on the main board, and then sets default settings
+
+  if(pressureSensor.isConnected() == LPS25HB_CODE_DISCONNECTED)  // The library supports some different error codes such as "DISCONNECTED"
+  {
+    Serial.println("LPS25HB disconnected. Reset the board to try again.");                         // Alert the user that the device cannot be reached
+    Serial.println("Are you using the right Wire port and I2C address?");         // Suggest possible fixes
+    Serial.println("See Example2_I2C_Configuration for how to change these.");    // Suggest possible fixes
+    Serial.println("");
+    while(1);
+  }
 }
 
 void loop() {
