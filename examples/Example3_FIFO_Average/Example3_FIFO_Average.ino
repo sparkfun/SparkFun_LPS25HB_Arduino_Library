@@ -9,21 +9,16 @@
 
   To connect the sensor to an Arduino:
   This library supports the sensor using the I2C protocol
+  On Qwiic enabled boards simply connnect the sensor with a Qwiic cable and it is set to go
+  On non-qwiic boards you will need to connect 4 wires between the sensor and the host board
   (Arduino pin) = (Display pin)
-  Pin 13 = SCLK on display carrier
-  11 = SDIN
-  10 = !CS
-  9 = !RES
-
-  The display is 160 pixels long and 32 pixels wide
-  Each 4-bit nibble is the 4-bit grayscale for that pixel
-  Therefore each byte of data written to the display paints two sequential pixels
-  Loops that write to the display should be 80 iterations wide and 32 iterations tall
+  SCL = SCL on display carrier
+  SDA = SDA
+  GND = GND
+  3.3V = 3.3V
 */
 
-
-
-// Click here to get the library: http://librarymanager/All#SparkFun_VEML6075 /// Update<---
+// Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
 #include <LPS25HB.h>  //
 
 LPS25HB pressureSensor; // Create an object of the LPS25HB class
@@ -33,10 +28,17 @@ void setup() {
   Serial.begin(9600);
   Serial.println("Hello!");
 
-  pressureSensor.begin();                                      // Simplest begin function uses the default Wire port and the default I2C address for the sensor
+  while(pressureSensor.isConnected == LPS25HB_CODE_DISCONNECTED)  // The library supports some different error codes such as "DISCONNECTED"
+  {
+    Serial.print("Waiting for connection to LPS25HB.");                         // Alert the user that the device cannot be reached
+    Serial.print(" Are you using the right Wire port and I2C address?");        // Suggest possible fixes
+    Serial.println(" See Example2_I2C_Configuration for how to change these."); // Example2 illustrates how to change the Wire port or I2C address
+    delay(250);
+  }
+
+  pressureSensor.begin();                                      // Begin links an I2C port and I2C address to the sensor, and begins I2C on the main board
   pressureSensor.setFIFOMeanNum(LPS25HB_FIFO_CTRL_M_32);       // Specifies the desired number of moving average samples. Valid values are 2, 4, 8, 16, and 32
   pressureSensor.setFIFOMode(LPS25HB_FIFO_CTRL_MEAN);          // Sets the FIFO to the MEAN mode, which implements a hardware moving average
-  
 }
 
 void loop() {

@@ -196,8 +196,6 @@ public:
 	int32_t 	getPressure_raw();
 	float		getPressure_hPa();
 
-
-
 	// Setters
 	LPS25HB_CodesTypeDef setReferencePressure(uint32_t adc_val);
 	LPS25HB_CodesTypeDef setPressureThreshold(uint16_t adc_val);
@@ -206,8 +204,6 @@ public:
 	LPS25HB_CodesTypeDef setOutputDataRate(uint8_t odr_code);
 	LPS25HB_CodesTypeDef setFIFOMode(uint8_t mode_code);
 	LPS25HB_CodesTypeDef setFIFOMeanNum(uint8_t mean_num);
-
-
 
 	// I2C Interface Basics
 	LPS25HB_CodesTypeDef read( uint8_t reg_adr, uint8_t * pdata, uint8_t size, uint8_t address = LPS25HB_I2C_ADDR_DEF);
