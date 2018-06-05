@@ -23,15 +23,15 @@
   3.3V = 3.3V
 */
 
-// Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
-#include <LPS25HB.h>  //
+
+#include <SparkFun_LPS25HB_Arduino_Library.h>  // Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
 
 LPS25HB pressureSensor; // Create an object of the LPS25HB class
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
   while(!Serial){} 
-  Serial.println("\nHello!");
+  Serial.println("LPS25HB Pressure Sensor Example 2 - Configuring I2C Past Default");
+  Serial.println();
 
 
   /* Using the begin() function for the LPS25HB gives the opportunity to 
@@ -41,13 +41,14 @@ void setup() {
    *  that.
    */
 
-  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF);    // Begin using default values when using the Qwiic system with the LPS25HB right out of the box
-//  pressureSensor.begin(Wire2);                         // By passing in only one argument you specify which Wire port to use - here we specify the Wire2 port
-//  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_ALT);    // In order to use the alternate address you must pass in both parameters like this
-//  pressureSensor.begin(LPS25HB_I2C_ADDR_ALT);          // This line would fail because begin() expects the first argument to be a Wire port
-//  pressureSensor.begin(Wire2, LPS25HB_I2C_ADDR_ALT);   // And of course you can change both the Wire port and the sensor address
+  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF, 100000);   // Begin using default values when using the Qwiic system with the LPS25HB right out of the box
+//  pressureSensor.begin(Wire2);                                // By passing in only one argument you specify which Wire port to use - here we specify the Wire2 port
+//  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_ALT);           // In order to use the alternate address you *must* pass in both parameters like this
+//  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF, 400000);   // In order to specify the I2C clock frequency you *must* explicate both of the first two parameters
+//  pressureSensor.begin(LPS25HB_I2C_ADDR_ALT);                 // This line would fail because begin() expects the first argument to be a Wire port, not an I2C address
+//  pressureSensor.begin(Wire2, LPS25HB_I2C_ADDR_ALT, 400000);  // And of course you can change the Wire port, sensor address, and I2C frequency all at once!
 
-  if(pressureSensor.isConnected() == LPS25HB_CODE_DISCONNECTED)  // The library supports some different error codes such as "DISCONNECTED"
+  if(pressureSensor.isConnected() == false)  // The library supports some different error codes such as "DISCONNECTED"
   {
     Serial.println("LPS25HB not found with your settings: ");                        // Alert the user that the device cannot be reached
     Serial.println("Troubleshooting: ");
@@ -61,7 +62,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   Serial.print("Pressure (hPa): "); 
   Serial.print(pressureSensor.getPressure_hPa());          // Get the pressure reading in hPa
   Serial.print(", Temperature (degC): "); 

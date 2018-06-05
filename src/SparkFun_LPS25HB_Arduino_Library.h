@@ -1,12 +1,12 @@
 /*
 
-LPS25HB.h
+SparkFun_LPS25HB_Arduino_Library.h
 
 This is an interface to the LPS25HB I2C absolute digital output barometer. The IC can be found in
 the SparkFun Qwiic series of sensors
 
 Created: May 2018
-Last Updated: May 2018
+Last Updated: June 2018
 
 Authors:
 Owen Lyke
@@ -159,15 +159,19 @@ typedef enum{
 	LPS25HB_CODE_ERR = 0x00,
 	LPS25HB_CODE_NOM,
 
+	// Setting failures
+	LPS25HB_CODE_SET_FAIL,
+	LPS25HB_CODE_RESET_FAIL,
+
 	// Connection status
 	LPS25HB_CODE_DISCONNECTED,
 	LPS25HB_CODE_CONNECTED,
+	LPS25HB_CODE_NO_DEV_AT_ADDRESS,
+	LPS25_HB_CODE_WRONG_ID,
 
 	//
-	LPS25HB_CODE_RX_UNDERFLOW,
-
-	// 
-	LPS25_HB_CODE_WRONG_ID
+	LPS25HB_CODE_RX_UNDERFLOW
+	
 
 }LPS25HB_CodesTypeDef;
 
@@ -183,10 +187,10 @@ public:
 
 	// Functions
 	LPS25HB( void );																							// Constructor
-	LPS25HB_CodesTypeDef begin(	TwoWire &wirePort = Wire, uint8_t address = LPS25HB_I2C_ADDR_DEF ); 			// Startup routine that uses the Wire port as the default
+	bool begin(	TwoWire &wirePort = Wire, uint8_t address = LPS25HB_I2C_ADDR_DEF, uint32_t clock_frequency = 100000 ); 			// Startup routine that uses the Wire port as the default
 
 	// Getters
-	LPS25HB_CodesTypeDef isConnected(); 	
+	bool isConnected(); 	
 	uint8_t getID();
 	uint8_t getStatus();
 
@@ -197,20 +201,21 @@ public:
 	float		getPressure_hPa();
 
 	// Setters
-	LPS25HB_CodesTypeDef setReferencePressure(uint32_t adc_val);
-	LPS25HB_CodesTypeDef setPressureThreshold(uint16_t adc_val);
-	LPS25HB_CodesTypeDef setTemperatureAverages(uint8_t avg_code);
-	LPS25HB_CodesTypeDef setPressureAverages(uint8_t avg_code);
-	LPS25HB_CodesTypeDef setOutputDataRate(uint8_t odr_code);
-	LPS25HB_CodesTypeDef setFIFOMode(uint8_t mode_code);
-	LPS25HB_CodesTypeDef setFIFOMeanNum(uint8_t mean_num);
+	bool setReferencePressure(uint32_t adc_val);
+	bool setPressureThreshold(uint16_t adc_val);
+	bool setTemperatureAverages(uint8_t avg_code);
+	bool setPressureAverages(uint8_t avg_code);
+	bool setOutputDataRate(uint8_t odr_code);
+	bool setFIFOMode(uint8_t mode_code);
+	bool setFIFOMeanNum(uint8_t mean_num);
 
-	// Setting Changer
-	LPS25HB_CodesTypeDef applySetting(uint8_t reg_adr, uint8_t setting);
+	// Setting Changers
+	bool applySetting(uint8_t reg_adr, uint8_t setting);
+	bool removeSetting(uint8_t reg_adr, uint8_t setting);
 
 	// I2C Interface Basics
-	LPS25HB_CodesTypeDef read( uint8_t reg_adr, uint8_t * pdata, uint8_t size, uint8_t address = LPS25HB_I2C_ADDR_DEF);
-	LPS25HB_CodesTypeDef write( uint8_t reg_adr, uint8_t * pdata, uint8_t size, uint8_t address = LPS25HB_I2C_ADDR_DEF);
+	bool read( uint8_t reg_adr, uint8_t * pdata, uint8_t size);
+	bool write( uint8_t reg_adr, uint8_t * pdata, uint8_t size);
 
 private:
 

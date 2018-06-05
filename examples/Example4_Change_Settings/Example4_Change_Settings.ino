@@ -18,19 +18,18 @@
   3.3V = 3.3V
 */
 
-// Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
-#include <LPS25HB.h>  //
+#include <SparkFun_LPS25HB_Arduino_Library.h>  // Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
 
 LPS25HB pressureSensor; // Create an object of the LPS25HB class
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
-  Serial.println("\nHello!");
+  Serial.println("LPS25HB Pressure Sensor Example 4 - Changing Settings");
+  Serial.println();
 
-  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF);    // Begin with I2C settings of your choice (see Example2_I2C_Configuration)
+  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF, 400000);    // Begin with I2C settings of your choice (see Example2_I2C_Configuration)
 
-  if(pressureSensor.isConnected() == LPS25HB_CODE_DISCONNECTED)  // The library supports some different error codes such as "DISCONNECTED"
+  if(pressureSensor.isConnected() == false)  
   {
     Serial.println("LPS25HB disconnected. Reset the board to try again.");                         // Alert the user that the device cannot be reached
     Serial.println("Are you using the right Wire port and I2C address?");         // Suggest possible fixes
@@ -54,12 +53,18 @@ void setup() {
   // This helps you know that you are setting the correct value
   pressureSensor.applySetting(LPS25HB_REG_CTRL_REG1, LPS25HB_CTRL_REG1_PD_ACTIVE); 
 
+
+  // You can also remove settings if needed! Here's an example:
+  // Here removing the 'active' mode setting woud turn off the sensor. 
+  // Removing a setting is not always guaranteed to reverse the effect of applying it
+  // so when in doubt the datasheet is the best resource.
+  pressureSensor.removeSetting(LPS25HB_REG_CTRL_REG1, LPS25HB_CTRL_REG1_PD_ACTIVE);
+  
   // Look at the references below to find other settings to try out!
   // There is a lot you can do with interrupts and a FIFO buffer.
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
   Serial.print("Pressure (hPa): "); 
   Serial.print(pressureSensor.getPressure_hPa());          // Get the pressure reading in hPa
   Serial.print(", Temperature (degC): "); 

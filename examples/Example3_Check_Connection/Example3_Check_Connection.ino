@@ -18,24 +18,23 @@
   3.3V = 3.3V
 */
 
-// Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
-#include <LPS25HB.h>  //
+
+#include <SparkFun_LPS25HB_Arduino_Library.h>  // Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
 
 LPS25HB pressureSensor; // Create an object of the LPS25HB class
 
 void setup() {
-  // put your setup code here, to run once:
   Serial.begin(9600);
-  Serial.println("\nHello!");
+  Serial.println("LPS25HB Pressure Sensor Example 3 - Checking the Connection");
+  Serial.println();
 
-  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF);    // Begin with I2C settings of your choice (see Example2_I2C_Configuration)
+  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF, 400000);    // Begin with I2C settings of your choice (see Example2_I2C_Configuration)
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
 
-  if(pressureSensor.isConnected() == LPS25HB_CODE_CONNECTED)
+  if(pressureSensor.isConnected() == true)
   {
     if(pressureSensor.getStatus() == 0x00){pressureSensor.begin();}                                 // If it is connected but not responding (for example after a hot-swap) then it may need to be re-initialized
     Serial.print("Connected. Sensor Status: "); 
