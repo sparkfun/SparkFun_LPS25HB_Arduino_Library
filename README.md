@@ -1,7 +1,7 @@
 SparkFun LPS25HB Absolute Barometric Pressure Sensor Arduino Library
 ========================================
 
-![SparkFun Qwiic Pressure Sensor w/ LPS25HB](https://cdn.sparkfun.com//assets/parts/1/2/6/6/6/14543-Flexible_Grayscale_OLED-04.jpg)
+![SparkFun Qwiic Pressure Sensor w/ LPS25HB](https://cdn.sparkfun.com//assets/parts/1/3/0/1/3/14767-Qwiic_Pressure_Sensor_-_LPS25HB-05.jpg)
 
 [*SparkFun Qwiic Pressure Sensor w/ LPS25HB (SPX-14767)*](https://www.sparkfun.com/products/14767)
 
