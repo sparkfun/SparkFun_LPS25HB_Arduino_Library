@@ -186,11 +186,11 @@ public:
 	LPS25HB_CodesTypeDef 	lastCode;		// Holds the last code returned from operations
 
 	// Functions
-	LPS25HB( void );																							// Constructor
-	bool begin(	TwoWire &wirePort = Wire, uint8_t address = LPS25HB_I2C_ADDR_DEF, uint32_t clock_frequency = 100000 ); 			// Startup routine that uses the Wire port as the default
+	LPS25HB( void );																									// Constructor
+	bool begin(	TwoWire &wirePort = Wire, uint8_t address = LPS25HB_I2C_ADDR_DEF, uint32_t clock_frequency = 100000 ); 	// Startup routine that uses the Wire port as the default
 
 	// Getters
-	bool isConnected(); 	
+	bool isConnected(); 					
 	uint8_t getID();
 	uint8_t getStatus();
 
