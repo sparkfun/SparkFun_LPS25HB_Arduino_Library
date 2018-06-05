@@ -29,7 +29,9 @@ Products that use this Library
 
 Version History
 ---------------
-* [V 1.0.1](https://github.com/sparkfun/SparkFun_LPS25HB_Arduino_Library/tree/V_1.0.1) - Polished release
+* [V 1.0.1](https://github.com/sparkfun/SparkFun_LPS25HB_Arduino_Library/tree/V_1.0.1) - Initial release
+* [V 1.0.2](https://github.com/sparkfun/SparkFun_LPS25HB_Arduino_Library/tree/V_1.0.2) - Boolean returns
+* [V 1.0.3](https://github.com/sparkfun/SparkFun_LPS25HB_Arduino_Library/tree/V_1.0.3) - Fixed reading bug
 
 License Information
 -------------------
