@@ -282,7 +282,7 @@ bool LPS25HB::setFIFOMode(uint8_t mode_code)
 	else
 	{
 		// Using the 'applySetting()' function with FIFO_EN will 'set' (means set to 1) the FIFO enable bit
-		if(applySetting(LPS25HB_REG_CTRL_REG2, LPS25HB_CTRL_REG2_FIFO_EN) ) != true)	
+		if(applySetting(LPS25HB_REG_CTRL_REG2, LPS25HB_CTRL_REG2_FIFO_EN) != true)	
 		{
 			return false;
 		}
