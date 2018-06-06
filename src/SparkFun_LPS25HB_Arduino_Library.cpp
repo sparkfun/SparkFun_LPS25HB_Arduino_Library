@@ -15,8 +15,6 @@ Owen Lyke
 #include <SparkFun_LPS25HB_Arduino_Library.h>  // Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
 
 
-
-
 /*
 		Note: You will see a repeated pattern of setting 'lastCode = CODE_X' 
 		and then returning a boolean value. This allows the functions easy to 
@@ -148,8 +146,14 @@ int16_t		LPS25HB::getTemperature_raw()
 */
 float		LPS25HB::getTemperature_degC()
 {
-	int16_t raw = getTemperature_raw();				// Get the 16 bit value from the sensor
-	return (float)(raw/480.0);						// Then divide by 480 and cast to a float to get the result in deg C
+	int16_t raw = getTemperature_raw();						// Get the 16 bit value from the sensor
+	return (float)(42.5 +(raw/480.0));						// Then divide by 480, add 42.5, and cast to a float to get the result in deg C. 
+	/*
+	NOTE! 	The LPS25HB datasheet does not specify the 42.5 deg C offset,
+			however the LPS25H datasheet does and it seems to work for 
+			this device as well. Thanks to the Pololu LPS25H library for
+			illuminating this problem.
+	*/
 }
 
 /**
