@@ -18,24 +18,26 @@
   3.3V = 3.3V
 */
 
-#include <SparkFun_LPS25HB_Arduino_Library.h>  // Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
+#include <SparkFun_LPS25HB_Arduino_Library.h> // Click here to get the library: http://librarymanager/All#SparkFun_LPS25HB
 
 LPS25HB pressureSensor; // Create an object of the LPS25HB class
 
-void setup() {
+void setup()
+{
   Serial.begin(9600);
   Serial.println("LPS25HB Pressure Sensor Example 4 - Changing Settings");
   Serial.println();
 
-  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF, 400000);    // Begin with I2C settings of your choice (see Example2_I2C_Configuration)
+  pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF); // Begin with I2C settings of your choice (see Example2_I2C_Configuration)
 
-  if(pressureSensor.isConnected() == false)  
+  if (pressureSensor.isConnected() == false)
   {
-    Serial.println("LPS25HB disconnected. Reset the board to try again.");                         // Alert the user that the device cannot be reached
-    Serial.println("Are you using the right Wire port and I2C address?");         // Suggest possible fixes
-    Serial.println("See Example2_I2C_Configuration for how to change these.");    // Suggest possible fixes
+    Serial.println("LPS25HB disconnected. Reset the board to try again.");     // Alert the user that the device cannot be reached
+    Serial.println("Are you using the right Wire port and I2C address?");      // Suggest possible fixes
+    Serial.println("See Example2_I2C_Configuration for how to change these."); // Suggest possible fixes
     Serial.println("");
-    while(1);
+    while (1)
+      ;
   }
 
   // If the sensor is found then apply desired settigns
@@ -51,28 +53,27 @@ void setup() {
   // This sets the sensor into 'active' mode (powered on) by wrting a value to the first control register
   // Notice how both the register name and the setting name say 'CTRL_REG1'
   // This helps you know that you are setting the correct value
-  pressureSensor.applySetting(LPS25HB_REG_CTRL_REG1, LPS25HB_CTRL_REG1_PD_ACTIVE); 
-
+  pressureSensor.applySetting(LPS25HB_REG_CTRL_REG1, LPS25HB_CTRL_REG1_PD_ACTIVE);
 
   // You can also remove settings if needed! Here's an example:
-  // Here removing the 'active' mode setting woud turn off the sensor. 
+  // Here removing the 'active' mode setting woud turn off the sensor.
   // Removing a setting is not always guaranteed to reverse the effect of applying it
   // so when in doubt the datasheet is the best resource.
   pressureSensor.removeSetting(LPS25HB_REG_CTRL_REG1, LPS25HB_CTRL_REG1_PD_ACTIVE);
-  
+
   // Look at the references below to find other settings to try out!
   // There is a lot you can do with interrupts and a FIFO buffer.
 }
 
-void loop() {
-  Serial.print("Pressure (hPa): "); 
-  Serial.print(pressureSensor.getPressure_hPa());          // Get the pressure reading in hPa
-  Serial.print(", Temperature (degC): "); 
-  Serial.println(pressureSensor.getTemperature_degC());    // Get the temperature in degrees C
+void loop()
+{
+  Serial.print("Pressure (hPa): ");
+  Serial.print(pressureSensor.getPressure_hPa()); // Get the pressure reading in hPa
+  Serial.print(", Temperature (degC): ");
+  Serial.println(pressureSensor.getTemperature_degC()); // Get the temperature in degrees C
 
-  delay(40);                                               // Wait - 40 ms corresponds to the maximum update rate of the sensor (25 Hz)
+  delay(40); // Wait - 40 ms corresponds to the maximum update rate of the sensor (25 Hz)
 }
-
 
 //////////////////////////////////
 //     Register Definitions
@@ -108,8 +109,6 @@ void loop() {
   LPS25HB_REG_RPDS_L
 
  */
-
-
 
 //////////////////////////////////
 //          Setting Options
