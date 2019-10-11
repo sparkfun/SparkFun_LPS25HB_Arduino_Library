@@ -28,6 +28,7 @@ void setup()
   Serial.println("LPS25HB Pressure Sensor Example 4 - Changing Settings");
   Serial.println();
 
+  Wire.begin();
   pressureSensor.begin(Wire, LPS25HB_I2C_ADDR_DEF); // Begin with I2C settings of your choice (see Example2_I2C_Configuration)
 
   if (pressureSensor.isConnected() == false)

@@ -35,6 +35,9 @@ void setup()
   Serial.println("LPS25HB Pressure Sensor Example 2 - Configuring I2C Past Default");
   Serial.println();
 
+  Wire.begin();
+  Wire.setClock(400000);
+
   /* Using the begin() function for the LPS25HB gives the opportunity to 
    *  change which Wire port and I2C address you want to use. This makes
    *  it possible to use up to 2 sensors on any one I2C bus, and to put 
